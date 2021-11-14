@@ -16,7 +16,18 @@ public class Joueur_Physique_ou_Virtuel {
     public List<Cartes_Rumeurs> jouer = new ArrayList<Cartes_Rumeurs> ();
 
     public List<Stratégie> stratégie = new ArrayList<Stratégie> ();
-
+    
+    public Joueur_Physique_ou_Virtuel(boolean rev, boolean witch, boolean sonTour, int id, int pts) {
+    	this.révélé=rev;
+    	this.witch=witch;
+    	this.sonTour=sonTour;
+    	this.id=id;
+    	this.points=pts;
+    }
+    public String toString(){
+    	String str = new String ("Révélé : "+this.révélé+" id : "+this.id+" Points : "+this.points);
+    	return str;
+    }
     public void accuser(final int id) {
     }
 

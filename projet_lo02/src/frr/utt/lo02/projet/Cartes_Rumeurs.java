@@ -9,10 +9,16 @@ public class Cartes_Rumeurs {
 
     public int idDetenteur;
 
-    public EffetWitch ;
+  //  public EffetWitch ;
 
-    public EffetHunt ;
-
+//    public EffetHunt ;
+    
+    public Cartes_Rumeurs(String nom,boolean hunt, boolean util, int iddet) {
+    	this.nom=nom;
+    	this.effetHunt=hunt;
+    	this.utilisee=util;
+    	this.idDetenteur=iddet;
+    }
     public void jouerCarte(final String nom, final boolean hunt) {
     }
 
