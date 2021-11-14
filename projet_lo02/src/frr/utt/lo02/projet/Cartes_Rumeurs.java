@@ -19,6 +19,10 @@ public class Cartes_Rumeurs {
     	this.utilisee=util;
     	this.idDetenteur=iddet;
     }
+    public String toString() {
+    	String str = new String ("nom : "+this.nom);
+    	return str;
+    }
     public void jouerCarte(final String nom, final boolean hunt) {
     }
 

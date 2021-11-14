@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Partie {
     private final int nbJoueursPhys;
@@ -19,7 +20,8 @@ public class Partie {
     	this.nbCartesParJoueur=nbcartes;
     	
     }
-    public void distribuerCartes(final int nbCartesParJoueur) {
+    public void distribuerCartes(Joueur_Physique_ou_Virtuel joueur, Cartes_Rumeurs carte) {
+    	joueur.jouer.add(carte);
     }
 
     public void finirPartie() {
@@ -85,10 +87,9 @@ public class Partie {
         System.out.println(nbcartes+" cartes vont être distribuées à chaque joueur");
     	Partie.getInstance(nbjp, nbbot, nbcartes);
     	List<Joueur_Physique_ou_Virtuel> jouerjoueur = new ArrayList<Joueur_Physique_ou_Virtuel> ();
-    	for (int i=0; i<nbbot+nbjp+1 ; i++) {
+    	for (int i=0; i<nbbot+nbjp ; i++) {
     		jouerjoueur.add(new Joueur_Physique_ou_Virtuel(false,false,false,i,0));
     	};
-		System.out.println(jouerjoueur.get(0));
     	Iterator<Joueur_Physique_ou_Virtuel>it = jouerjoueur.iterator();
     	while (it.hasNext()){
     		System.out.println(it.next());
@@ -106,6 +107,29 @@ public class Partie {
      	jouercarte.add(new Cartes_Rumeurs("Toad",false,false,0));
      	jouercarte.add(new Cartes_Rumeurs("Black Cat",false,false,0));
      	jouercarte.add(new Cartes_Rumeurs("Pet Newt",false,false,0));
+  		Random rand=new Random();
+  		int cartestirées[]= {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+  		int compt=0;
+  		for (int j=0; j<nbbot+nbjp; j++) {
+     	for (int i=0; i<nbcartes ; i++) {
+     		int a = rand.nextInt(11);
+     		while ( a==cartestirées[0] || a==cartestirées[1] || a==cartestirées[2] || a==cartestirées[3] || a==cartestirées[4] || a==cartestirées[5] || a==cartestirées[6] || a==cartestirées[7] || a==cartestirées[8] || a==cartestirées[9] || a==cartestirées[10]) {
+     			a=a+1;
+     			if (a==12) {
+     				a=0;
+     			}
+     		}
+     		partieUnique.distribuerCartes(jouerjoueur.get(j),jouercarte.get(a));
+     		cartestirées[compt]=a;
+     		compt++;
+     	}
+     		//tirage aléatoire d'une variable mise dans get
+  	        System.out.println("Le joueur "+jouerjoueur.get(j).getId()+" possède les cartes : ");
+         	Iterator<Cartes_Rumeurs>main = Joueur_Physique_ou_Virtuel.jouer.iterator();
+            while (main.hasNext()) {
+                System.out.println(main.next());	
+         	}
+     	}
     	clavier.close();
     }
 
