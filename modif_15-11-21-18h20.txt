@@ -1,0 +1,7 @@
+
+Modif 15/11/21 18:20
+Classe Partie, changement du choix bot passage de int en char pour lire le Oui et le Non, ajout d'une fonction convertion majuscule, qui convertit la premiere lettre de oui ou non. 
+ex: si on ecrit nOn alors il en ressort NOn, si on ecrit Oui il en ressort Oui. 
+
+Changement des whiles pour avoir uniquement le nombre de joueurs limite (3 min, 6 max). Si nous faisons le choix de jouer avec des bots il faut que la somme nbjp + nbbot<= 6, donc il faut aussi aussi au minimum 1 joueurs physique et 2 bots. 
+Le traitement d'un while aurait demandé des paramètres supplémentaires pour faire des sorties de if, j'ai préféré opter pour 3 whiles qui pourront être optimisé par la suite pour ne pas nous surcharger de variable de passage. 
