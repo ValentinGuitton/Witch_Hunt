@@ -1,3 +1,4 @@
+// Modif 15/11/2021
 package frr.utt.lo02.projet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +21,7 @@ public class Partie {
     	this.nbCartesParJoueur=nbcartes;
     	
     }
-//distribution d'une carte à un joueur
+//distribution d'une carte Ã  un joueur
     public void distribuerCartes(Joueur_Physique_ou_Virtuel joueur, Cartes_Rumeurs carte) {
     	joueur.jouer.add(carte);
     }
@@ -59,7 +60,7 @@ public class Partie {
         return(choix); // retourne choix
     }
     public static void main(String[] args) {
-    //On initialise des variables pour le nombre de joueurs physiques et virtuels, on utilise un scanner pour récupérer les nombres entrés par l'utilisateur
+    //On initialise des variables pour le nombre de joueurs physiques et virtuels, on utilise un scanner pour rÃ©cupÃ©rer les nombres entrÃ©s par l'utilisateur
     //tout en respectant les contraintes max 6 joueurs, au moins un joueur physique et en calculant le nombre de cartes par joueur
     	int nbbot=0;
     	int nbjp=0;
@@ -103,16 +104,16 @@ public class Partie {
     		}
     		else if (nbbot+nbjp==5) {
     			nbcartes=2;
-    			//ajouter la mise à l'écart de 2 cartes
+    			//ajouter la mise Ã  l'Ã©cart de 2 cartes
     		}
     		else if (nbbot+nbjp==6) {
     			nbcartes=2;
     		}
-    	//Création de la partie
-        System.out.println("Création d'une partie avec "+ nbjp +" joueur(s) physique(s) et "+ nbbot +" joueur(s) virtuel(s)");
-        System.out.println(nbcartes+" cartes vont être distribuées à chaque joueur");
+    	//CrÃ©ation de la partie
+        System.out.println("CrÃ©ation d'une partie avec "+ nbjp +" joueur(s) physique(s) et "+ nbbot +" joueur(s) virtuel(s)");
+        System.out.println(nbcartes+" cartes vont Ãªtre distribuÃ©es Ã  chaque joueur");
     	Partie.getInstance(nbjp, nbbot, nbcartes);
-    	//Création de la liste des joueurs
+    	//CrÃ©ation de la liste des joueurs
     	List<Joueur_Physique_ou_Virtuel> jouerjoueur = new ArrayList<Joueur_Physique_ou_Virtuel> ();
     	for (int i=0; i<nbbot+nbjp ; i++) {
     		jouerjoueur.add(new Joueur_Physique_ou_Virtuel(false,false,false,i,0));
@@ -122,7 +123,7 @@ public class Partie {
     	while (it.hasNext()){
     		System.out.println(it.next());
     	}
-    	//Création de la liste de cartes
+    	//CrÃ©ation de la liste de cartes
     	List<Cartes_Rumeurs> jouercarte = new ArrayList<Cartes_Rumeurs> ();
     	jouercarte.add(new Cartes_Rumeurs("Angry Mob",false,false,0));
      	jouercarte.add(new Cartes_Rumeurs("The Inquisition",false,false,0));
@@ -136,30 +137,30 @@ public class Partie {
      	jouercarte.add(new Cartes_Rumeurs("Toad",false,false,0));
      	jouercarte.add(new Cartes_Rumeurs("Black Cat",false,false,0));
      	jouercarte.add(new Cartes_Rumeurs("Pet Newt",false,false,0));
-     	//partie pour la distribution des cartes, à modifier en utilisant le td Collections
+     	//partie pour la distribution des cartes, Ã  modifier en utilisant le td Collections
      	/*
-     	//Utilisation de random pour le tirage aléatoire
+     	//Utilisation de random pour le tirage alÃ©atoire
   		Random rand=new Random();
-  		//On initialise un tableau qui contiendra les cartes distribuées (ne pas avoir de carte distribuée plusieurs fois)
-  		int cartestirées[]= {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+  		//On initialise un tableau qui contiendra les cartes distribuÃ©es (ne pas avoir de carte distribuÃ©e plusieurs fois)
+  		int cartestirÃ©es[]= {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
   		int compt=0;
   		//Boucle j pour changer d'utilisateur et boucle i pour changer de carte
   		for (int j=0; j<nbbot+nbjp; j++) {
      	for (int i=0; i<nbcartes ; i++) {
-     	//tirage aléatoire
+     	//tirage alÃ©atoire
      		int a = rand.nextInt(11);
-     		while ( a==cartestirées[0] || a==cartestirées[1] || a==cartestirées[2] || a==cartestirées[3] || a==cartestirées[4] || a==cartestirées[5] || a==cartestirées[6] || a==cartestirées[7] || a==cartestirées[8] || a==cartestirées[9] || a==cartestirées[10]) {
+     		while ( a==cartestirÃ©es[0] || a==cartestirÃ©es[1] || a==cartestirÃ©es[2] || a==cartestirÃ©es[3] || a==cartestirÃ©es[4] || a==cartestirÃ©es[5] || a==cartestirÃ©es[6] || a==cartestirÃ©es[7] || a==cartestirÃ©es[8] || a==cartestirÃ©es[9] || a==cartestirÃ©es[10]) {
      			a=a+1;
      			if (a==12) {
      				a=0;
      			}
      		}
      		partieUnique.distribuerCartes(jouerjoueur.get(j),jouercarte.get(a));
-     		cartestirées[compt]=a;
+     		cartestirÃ©es[compt]=a;
      		compt++;
      	}
-     	//affichage des cartes possédées
-  	        System.out.println("Le joueur "+jouerjoueur.get(j).getId()+" possède les cartes : ");
+     	//affichage des cartes possÃ©dÃ©es
+  	        System.out.println("Le joueur "+jouerjoueur.get(j).getId()+" possÃ¨de les cartes : ");
          	Iterator<Cartes_Rumeurs>main = Joueur_Physique_ou_Virtuel.jouer.iterator();
             while (main.hasNext()) {
                 System.out.println(main.next());	
