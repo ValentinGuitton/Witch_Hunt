@@ -16,7 +16,7 @@ public class Joueur_Physique_ou_Virtuel {
     public static List<Cartes_Rumeurs> jouer = new ArrayList<Cartes_Rumeurs> ();
 
     public List<Stratégie> stratégie = new ArrayList<Stratégie> ();
-    
+    //Constructeur
     public Joueur_Physique_ou_Virtuel(boolean rev, boolean witch, boolean sonTour, int id, int pts) {
     	this.révélé=rev;
     	this.witch=witch;
@@ -24,6 +24,7 @@ public class Joueur_Physique_ou_Virtuel {
     	this.id=id;
     	this.points=pts;
     }
+    //Affichage des joueurs
     public String toString(){
     	String str = new String ("Numéro :"+this.id);
     	return str;

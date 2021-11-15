@@ -12,13 +12,14 @@ public class Cartes_Rumeurs {
   //  public EffetWitch ;
 
 //    public EffetHunt ;
-    
+    //Constructeur
     public Cartes_Rumeurs(String nom,boolean hunt, boolean util, int iddet) {
     	this.nom=nom;
     	this.effetHunt=hunt;
     	this.utilisee=util;
     	this.idDetenteur=iddet;
     }
+    //Affichage des cartes
     public String toString() {
     	String str = new String ("nom : "+this.nom);
     	return str;
