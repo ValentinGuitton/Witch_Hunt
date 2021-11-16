@@ -1,0 +1,7 @@
+Classe PartieV2 : 
+Ajout de la partie choisirRole, pour ça j'ai lister les joueurs en demandant un clavier.nextInt() a chaque joueur pour leur demandé 1: sorciere ou 0: villageois 
+Elle est composé d'une boucle for et elle reprend la méthode de la classe JPJVV2 (Joueur physique ... V2) 
+
+Classe JPJVV2: 
+Ajout du code dans la méthode ChoisirRole, similaire à une methode setRole (setWitch dans notre proj). 
+
