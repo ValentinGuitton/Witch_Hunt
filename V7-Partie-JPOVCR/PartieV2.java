@@ -82,12 +82,13 @@ public class PartieV2 {
     }
 
     public static void enleverCarte(final int carte, final int id) {
+    	System.out.println("Cartes enlevées : ");
    		PartieV2.partieUnique.cartesdéfaussées.add(PartieV2.partieUnique.jouerjoueur.get(id).main.get(carte));
-		PartieV2.partieUnique.jouerjoueur.get(id).main.remove(PartieV2.partieUnique.jouerjoueur.get(id).main.get(carte));
 		Iterator<Cartes_RumeursV2> itest = PartieV2.partieUnique.cartesdéfaussées.iterator();
 		while (itest.hasNext()) {
 			System.out.println(itest.next());
 		}
+		PartieV2.partieUnique.jouerjoueur.get(id).main.remove(PartieV2.partieUnique.jouerjoueur.get(id).main.get(carte));
     }
 
     public static void donnerTour(final int id) {
@@ -110,10 +111,6 @@ public class PartieV2 {
     	int nbjp=0;
     	int nbcartes=0;
     	Scanner clavier = new Scanner(System.in);
-//    	while (nbjp<1 || nbjp>6) {
-//    		System.out.print("Saisir le nombre de joueurs physiques (max 6) : ");
-//    		nbjp = clavier.nextInt();
-//    	};
     //choix d'avoir des bots ou non
     	char bot = 'A';
     	while(bot!='O' && bot!='N') {
@@ -231,7 +228,6 @@ public class PartieV2 {
     	System.out.println("Joueur "+idj+" voici vos cartes :");
 		Iterator<Cartes_RumeursV2> it2 = PartieV2.partieUnique.jouerjoueur.get(idj).main.iterator();
 		while(it2.hasNext()) {
-			//it2.next().afficherDescription(it2.next().nom);
 			String nom = it2.next().nom;
 			PartieV2.partieUnique.jouercarte.get(0).afficherDescription(nom);
 		}
@@ -258,31 +254,12 @@ public class PartieV2 {
         	réponse = conversion_majuscule(réponse);
         	if (réponse=='W') {
         		System.out.println("\nVous avez choisi d'utiliser l'effet Witch d'une de vos cartes");
-        		/*boolean appartient = false;*/
         		String nomcarte=null; 
         		int idchoisie=-1;
         		String debug=clavier.nextLine();//cet élément n'est pas à proprement utile pour le code mais il y a un bug avec ue sorte de 
 				//"ligne vide" qui est lue au premier clavier.nextLine() de cette boucle while
 				//sans debug on passe une fois dans le for et certains if et des affichages faux à l'écran
 				//peuvent déconcerter les joueurs
-        		/*while(appartient==false) {
-        			System.out.println("\nVeuillez entrer le nom de la carte que vous voulez utiliser");
-        			String nomc = clavier.nextLine();
-        			nomcarte=nomc;
-        			for (int i=0;i<PartieV2.partieUnique.jouerjoueur.get(accusé).main.size();i++) {
-        				if ((PartieV2.partieUnique.jouerjoueur.get(accusé).main.get(i).nom).equalsIgnoreCase(nomc)) {
-        					appartient=true;
-        					idchoisie=i;
-        				}
-        			if (nomc == "The Inquisition" && PartieV2.partieUnique.jouerjoueur.get(accusé).main.size()<2) {
-        				appartient=false;
-        				System.out.println("Cette carte n'est pas jouable car son effet Witch nécessite au minimum 2 cartes");
-        			}
-        			}
-        			if (appartient==false) {
-        			System.out.println("Cette carte n'est pas en votre possession, veuillez en choisir une autre");
-        			}
-        		}*/
         		boolean app= false;
         		String nom ="0";
         		while (app ==false) {
@@ -337,34 +314,6 @@ public class PartieV2 {
 		}
 		System.out.println("Round terminé");
      	//partie pour la distribution des cartes, à modifier en utilisant le td Collections
-     	/*
-     	//Utilisation de random pour le tirage aléatoire
-  		Random rand=new Random();
-  		//On initialise un tableau qui contiendra les cartes distribuées (ne pas avoir de carte distribuée plusieurs fois)
-  		int cartestirées[]= {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-  		int compt=0;
-  		//Boucle j pour changer d'utilisateur et boucle i pour changer de carte
-  		for (int j=0; j<nbbot+nbjp; j++) {
-     	for (int i=0; i<nbcartes ; i++) {
-     	//tirage aléatoire
-     		int a = rand.nextInt(11);
-     		while ( a==cartestirées[0] || a==cartestirées[1] || a==cartestirées[2] || a==cartestirées[3] || a==cartestirées[4] || a==cartestirées[5] || a==cartestirées[6] || a==cartestirées[7] || a==cartestirées[8] || a==cartestirées[9] || a==cartestirées[10]) {
-     			a=a+1;
-     			if (a==12) {
-     				a=0;
-     			}
-     		}
-     		partieUnique.distribuerCartes(jouerjoueur.get(j),jouercarte.get(a));
-     		cartestirées[compt]=a;
-     		compt++;
-     	}
-     	//affichage des cartes possédées
-  	        System.out.println("Le joueur "+jouerjoueur.get(j).getId()+" possède les cartes : ");
-         	Iterator<Cartes_Rumeurs>main = Joueur_Physique_ou_Virtuel.jouer.iterator();
-            while (main.hasNext()) {
-                System.out.println(main.next());	
-         	}
-     	}*/
     	clavier.close();
     }
 
