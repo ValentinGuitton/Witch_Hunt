@@ -1,0 +1,5 @@
+Si nous voulons des bots, les numéro de joueurs les plus faibles sont réservés aux bots. 
+Si on veut 1 bot et 2 joueur P 
+alors le bot aura comme numéro : 0 
+
+ligne 458 : TEST accusation bot
