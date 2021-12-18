@@ -11,6 +11,8 @@ public class PartieV2 extends Observable{
     private static int nbJoueursPhys=-2;
 
     private static int nbBots=-2;
+    
+    private static int actuel=-1;
 
     private static PartieV2 partieUnique = null;
 
@@ -27,6 +29,7 @@ public class PartieV2 extends Observable{
     private List<Cartes_RumeursV2> cartesdéfaussées;
     
     protected static int comptrévélés;
+    
 //constructeur 
     public PartieV2(int nbjp,int nbbot, int nbcartes) {
     	this.nbJoueursPhys=nbjp;
@@ -83,6 +86,8 @@ public class PartieV2 extends Observable{
     }
     public void setnbJoueursPhys(int nbJoueurPhys) {
     	this.nbJoueursPhys=nbJoueurPhys;
+    	this.setChanged();
+    	this.notifyObservers();
     }
     public static int getnbJoueursPhys() {
     	return nbJoueursPhys;
@@ -90,9 +95,19 @@ public class PartieV2 extends Observable{
     
     public void setnbBots(int nbBots) {
     	this.nbBots=nbBots;
+    	this.setChanged();
+    	this.notifyObservers();
     }
     public static int getnbBots() {
     	return nbBots;
+    }
+    public void setActuel(int act) {
+    	this.actuel=act;
+    	this.setChanged();
+    	this.notifyObservers();
+    }
+    public static int getActuel() {
+    	return actuel;
     }
     public static List<Joueur_Physique_ou_VirtuelV2> getJouerJoueur(){
     	return PartieV2.partieUnique.jouerjoueur;
