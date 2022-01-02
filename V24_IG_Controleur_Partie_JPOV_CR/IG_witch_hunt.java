@@ -137,6 +137,30 @@ public class IG_witch_hunt implements Observer{
 	    
 		new ControleurPartie(this,partie, commencer1, choix_nb_jp, choix_nb_jv, selectJ, spinner3, chxj, role, chxrole, btnAccuser, spinnerAcc, btnRevId, btnEffWitch, btnmain, spinnerCibleWitch, spinnerChoixCarte, spinnerInq, btnrécup, btnrécuphooked, btnEffetHunt,spinnerCibleHunt ,spinnerCarteHunt, btnCacher, btnRevIdDuck, btnSuppDuck, spinnerSuppDuck, btnrecupBlackCat, btnRecupPet);
 		
+		JTextPane txtpnCible = new JTextPane();
+		txtpnCible.setText("Cible");
+		txtpnCible.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtpnCible.setBounds(750, 171, 37, 20);
+		frame.getContentPane().add(txtpnCible);
+		
+		JTextPane txtpnCarte = new JTextPane();
+		txtpnCarte.setText("Carte");
+		txtpnCarte.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtpnCarte.setBounds(805, 171, 40, 20);
+		frame.getContentPane().add(txtpnCarte);
+		
+		JTextPane txtpnCible_1 = new JTextPane();
+		txtpnCible_1.setText("Cible");
+		txtpnCible_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtpnCible_1.setBounds(716, 118, 48, 20);
+		frame.getContentPane().add(txtpnCible_1);
+		
+		JTextPane txtpnCarte_1 = new JTextPane();
+		txtpnCarte_1.setText("Carte");
+		txtpnCarte_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtpnCarte_1.setBounds(827, 118, 48, 20);
+		frame.getContentPane().add(txtpnCarte_1);
+		
 		
 		
 	}
@@ -421,12 +445,12 @@ public class IG_witch_hunt implements Observer{
 		
 		
 		btnRevId = new JButton("Reveler Id");
-		btnRevId.setBounds(629, 141, 114, 23);
+		btnRevId.setBounds(850, 193, 114, 23);
 		frame.getContentPane().add(btnRevId);
 		btnRevId.setEnabled(false);
 		
 		btnEffWitch = new JButton("Effet Witch");
-		btnEffWitch.setBounds(629, 170, 114, 23);
+		btnEffWitch.setBounds(619, 193, 114, 23);
 		frame.getContentPane().add(btnEffWitch);
 		btnEffWitch.setEnabled(false);
 		
@@ -452,19 +476,19 @@ public class IG_witch_hunt implements Observer{
 		textField_8.setColumns(10);
 		
 		btnmain = new JButton("Afficher main");
-		btnmain.setBounds(779, 141, 124, 23);
+		btnmain.setBounds(731, 149, 124, 23);
 		frame.getContentPane().add(btnmain);
 		
 		spinnerCibleWitch = new JSpinner();
-		spinnerCibleWitch.setBounds(753, 171, 30, 20);
+		spinnerCibleWitch.setBounds(757, 196, 30, 20);
 		frame.getContentPane().add(spinnerCibleWitch);
 		
 		spinnerChoixCarte = new JSpinner();
-		spinnerChoixCarte.setBounds(789, 171, 30, 20);
+		spinnerChoixCarte.setBounds(815, 194, 30, 20);
 		frame.getContentPane().add(spinnerChoixCarte);
 	
 		spinnerInq = new JSpinner();
-		spinnerInq.setBounds(713, 217, 125, 20);
+		spinnerInq.setBounds(778, 259, 125, 20);
 		spinnerInq.setModel(new SpinnerNumberModel(0, 0, 4, 1));
 		frame.getContentPane().add(spinnerInq);
 		
@@ -489,15 +513,15 @@ public class IG_witch_hunt implements Observer{
 		txtpnCarteSupprimer = new JTextPane();
 		txtpnCarteSupprimer.setText("Carte \u00E0 supprimer (\"The Inquisition\") :");
 		txtpnCarteSupprimer.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtpnCarteSupprimer.setBounds(639, 196, 242, 20);
+		txtpnCarteSupprimer.setBounds(722, 238, 242, 20);
 		frame.getContentPane().add(txtpnCarteSupprimer);
 		
 		spinnerCibleHunt = new JSpinner();
-		spinnerCibleHunt.setBounds(713, 118, 30, 20);
+		spinnerCibleHunt.setBounds(771, 118, 30, 20);
 		frame.getContentPane().add(spinnerCibleHunt);
 		
 		spinnerCarteHunt = new JSpinner();
-		spinnerCarteHunt.setBounds(753, 118, 30, 20);
+		spinnerCarteHunt.setBounds(885, 118, 30, 20);
 		frame.getContentPane().add(spinnerCarteHunt);
 		
 		textField_9 = new JTextField();
@@ -550,20 +574,20 @@ public class IG_witch_hunt implements Observer{
 		frame.getContentPane().add(textField_11);
 		textField_11.setColumns(10);
 		
+		txtarea_2 = new TextArea();
+		txtarea_2.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		txtarea_2.setEnabled(false);
+		txtarea_2.setColumns(10);
+		txtarea_2.setBounds(138, 238, 670, 166);
+		frame.getContentPane().add(txtarea_2);
+		txtarea_2.setVisible(false);
+		
 		txtarea_1 = new TextArea();
 		txtarea_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtarea_1.setEnabled(false);
 		txtarea_1.setColumns(10);
 		txtarea_1.setBounds(480, 469, 205, 108);
 		frame.getContentPane().add(txtarea_1);
-		
-		txtarea_2 = new TextArea();
-		txtarea_2.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		txtarea_2.setEnabled(false);
-		txtarea_2.setColumns(10);
-		txtarea_2.setBounds(124, 243, 670, 166);
-		frame.getContentPane().add(txtarea_2);
-		txtarea_2.setVisible(false);
 	}
 	
 	public void update(Observable instanceObservable, Object arg1){
