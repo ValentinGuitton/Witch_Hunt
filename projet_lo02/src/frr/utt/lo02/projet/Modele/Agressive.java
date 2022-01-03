@@ -1,10 +1,15 @@
 package frr.utt.lo02.projet.Modele;
 
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Scanner;
 import java.util.Random;
 
-public abstract class Agressive implements Stratégie {
+public abstract class Agressive extends Observable implements Stratégie  {
+	public void prevenirChange() {;
+		this.setChanged();
+		this.notifyObservers();
+	}
     public static void jouerBot(Joueur_Physique_ou_VirtuelV2 joueur,Joueur_Physique_ou_VirtuelV2 accuse) {
    	Scanner clavier = new Scanner(System.in);
     	if(joueur.getTour()==true && joueur.getBot()==true) {

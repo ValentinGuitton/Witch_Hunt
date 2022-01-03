@@ -13,10 +13,14 @@ public class PartieV2 extends Observable{
     private static int nbBots=-2;
     
     private static int actuel=-1;
+    
+    private static int accusé =-1;
+    
+    private boolean interfaceg=false;
 
     private static PartieV2 partieUnique = null;
 
-    private int nbCartesParJoueur;
+    private static int nbCartesParJoueur;
     
     protected static Cartes_RumeursV2 cartesup1;
     
@@ -28,10 +32,10 @@ public class PartieV2 extends Observable{
     
     private List<Cartes_RumeursV2> cartesdéfaussées;
     
-    protected static int comptrévélés;
+    protected static int comptrévélés=0;
     
 //constructeur 
-    public PartieV2(int nbjp,int nbbot, int nbcartes) {
+    private PartieV2(int nbjp,int nbbot, int nbcartes) {
     	this.nbJoueursPhys=nbjp;
     	this.nbBots=nbbot;
     	this.nbCartesParJoueur=nbcartes;
@@ -109,14 +113,64 @@ public class PartieV2 extends Observable{
     public static int getActuel() {
     	return actuel;
     }
+    public void setNbCartesParJoueur(int nbcarte) {
+    	this.nbCartesParJoueur=nbcarte;
+    }
+    public static int getNbCartesParJoueur() {
+    	return nbCartesParJoueur;
+    }
+    public void setComptRévélés(int compt) {
+    	this.comptrévélés=compt;
+    	this.setChanged();
+    	this.notifyObservers();
+    }
+    public int getComptRévélés() {
+    	return this.comptrévélés;
+    }
+    public static void setAccusé(int accusé) {
+    	PartieV2.accusé=accusé;
+    }
+    public int getAccusé() {
+    	return this.accusé;
+    }
     public static List<Joueur_Physique_ou_VirtuelV2> getJouerJoueur(){
     	return PartieV2.partieUnique.jouerjoueur;
+    }
+    public List<Joueur_Physique_ou_VirtuelV2> getJouerJoueur2(){
+    	this.setChanged();
+    	this.notifyObservers();
+    	return this.jouerjoueur;
     }
     public static List<Cartes_RumeursV2> getCartesDefaussées(){
     	return PartieV2.partieUnique.cartesdéfaussées;
     }
     public static List<Cartes_RumeursV2> getJouerCarte(){
     	return PartieV2.partieUnique.jouercarte;
+    }
+    public List<Cartes_RumeursV2> getJouerCarte2(){
+    	this.setChanged();
+    	this.notifyObservers();
+    	return this.jouercarte;
+    }
+    public void setInterfaceg(boolean inter) {
+    	PartieV2.partieUnique.interfaceg=inter;
+    }
+    public static boolean getInterfaceg() {
+    	return PartieV2.partieUnique.interfaceg;
+    }
+    public static void creationJeu() {
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Angry Mob",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("The Inquisition",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Pointed Hat",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Hooked Nose",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Broomstick",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Wart",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Ducking Stool",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Cauldron",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Evil Eye",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Toad",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Black Cat",false,false,0));
+    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Pet Newt",false,false,0));
     }
 	// ajout d'un joueur à la liste des joueurs
 	public void ajouterUnJoueur(Joueur_Physique_ou_VirtuelV2 joueur){
@@ -196,10 +250,16 @@ public class PartieV2 extends Observable{
 			System.out.println(itest.next());
 		}
 		PartieV2.partieUnique.jouerjoueur.get(id).main.remove(PartieV2.partieUnique.jouerjoueur.get(id).main.get(carte));
+		//PartieV2.partieUnique.setChanged();
+		//PartieV2.partieUnique.notifyObservers();
     }
 
     public static void donnerTour(final int id) {
     	PartieV2.partieUnique.jouerjoueur.get(id).sonTour = true;
+    	PartieV2.partieUnique.actuel=id;
+		PartieV2.partieUnique.setChanged();
+		PartieV2.partieUnique.notifyObservers();
+    	
     }
     public static void enleverTour (int id) {
     	jouerjoueur.get(id).sonTour = false;
@@ -285,7 +345,7 @@ public class PartieV2 extends Observable{
     	//Création de la partie
         System.out.println("Création d'une partie avec "+ PartieV2.partieUnique.getnbJoueursPhys() +" joueur(s) physique(s) et "+ PartieV2.partieUnique.getnbBots() +" joueur(s) virtuel(s)");
         System.out.println(nbcartes+" cartes vont être distribuées à chaque joueur");
-    	PartieV2.getInstance(PartieV2.partieUnique.getnbBots(), PartieV2.partieUnique.getnbBots(), nbcartes);
+    	PartieV2.getInstance(PartieV2.partieUnique.getnbJoueursPhys(), PartieV2.partieUnique.getnbBots(), nbcartes);
     	//Création de la liste des joueurs
     	for (int i=0; i<PartieV2.partieUnique.getnbBots() ; i++) {
     		PartieV2.partieUnique.ajouterUnJoueur(new Joueur_Physique_ou_VirtuelV2(false,false,false,true,i,0,false,true));
@@ -294,18 +354,7 @@ public class PartieV2 extends Observable{
     		PartieV2.partieUnique.ajouterUnJoueur(new Joueur_Physique_ou_VirtuelV2(false,false,false,true,i,0,false,false));
     	}
     	//Création de la liste de cartes
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Angry Mob",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("The Inquisition",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Pointed Hat",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Hooked Nose",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Broomstick",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Wart",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Ducking Stool",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Cauldron",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Evil Eye",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Toad",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Black Cat",false,false,0));
-    	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Pet Newt",false,false,0));
+    	PartieV2.partieUnique.creationJeu();
     	
     	PartieV2.partieUnique.melanger();
     	int compt=0;

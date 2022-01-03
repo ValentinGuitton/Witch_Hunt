@@ -21,6 +21,8 @@ public class Joueur_Physique_ou_VirtuelV2 extends Observable{
 
     protected int points;
     
+    private boolean regardeMain=false;
+    
     private boolean gagnant;
 
     public List<Cartes_RumeursV2> main;
@@ -47,6 +49,29 @@ public class Joueur_Physique_ou_VirtuelV2 extends Observable{
     public String toString(){
     	String str = new String ("Numéro :"+this.id+" Son tour : "+this.sonTour);
     	return str;
+    }
+    public List<Cartes_RumeursV2> getMain(){
+    	return this.main;
+    }
+    public void setRegardeMain(boolean reg) {
+    	this.regardeMain=reg;
+    	this.setChanged();
+    	this.notifyObservers();
+    }
+    public boolean getRegardeMain() {
+    	return this.regardeMain;
+    }
+    public void setReveler (boolean rev) {
+    	this.révélé=rev;
+    }
+    public boolean getReveler() {
+    	return this.révélé;
+    }
+    public void setEnJeu (boolean enjeu) {
+    	this.enJeu=enjeu;
+    }
+    public boolean getEnJeu() {
+    	return this.enJeu;
     }
     public void accuser(final int id) {
     }
@@ -87,7 +112,10 @@ public class Joueur_Physique_ou_VirtuelV2 extends Observable{
     	return this.estAccusé;
     }
     public void setEstAccusé(boolean accusé) {
+
     	this.estAccusé=accusé;
+    	this.setChanged();
+    	this.notifyObservers();
     }
     public void setGagnant(boolean gagne) {
     	this.gagnant=gagne;
@@ -95,7 +123,18 @@ public class Joueur_Physique_ou_VirtuelV2 extends Observable{
     public boolean getGagnant() {
     	return this.gagnant;
     }
+    public void setRole(boolean role) {
+    	this.witch=role;
+    	this.setChanged();
+    	this.notifyObservers();
+    }
+    public boolean getRole() {
+    	return this.witch;
+    }
     public List<Cartes_RumeursV2> getCartesJouees(){
     	return this.cartesjouees;
+    }
+    public int getPoints() {
+    	return this.points;
     }
 }
