@@ -7,10 +7,58 @@ import frr.utt.lo02.projet.Vue.*;
 import javax.swing.*;
 
 import frr.utt.lo02.projet.Modele.*;
-
+/**
+ * 
+ * @author lou prevost, valentin guitton
+ *
+ */
+/**
+ * La classe contrôleur récupère les inputs faits au niveau de l'interface graphique IG_witch_hunt et agit de façons différentes sur les modèles en fonction de l'input.
+ * Il fait donc le lien entre la vue et le modèle et la modification entrainée sur le modèle entrainera une modification de la vue.
+ * On retrouve dans cette classe plusieurs actionPerformed qui correspondent aux actions précises déclenchées par l'appui sur le bouton spécifié.
+ */
 public class ControleurPartie {
-
+/**
+ * 
+ * @param igraph
+ * @param partie
+ * @param btn
+ * @param spinner1
+ * @param spinner2
+ * @param btn1erJ
+ * @param spinner3
+ * @param chxj
+ * @param role
+ * @param chxjrole
+ * @param btnAccuser
+ * @param spinnerAcc
+ * @param btnRevId
+ * @param btnEffWitch
+ * @param btnmain
+ * @param spinnerCibleWitch
+ * @param spinnerChoixCarte
+ * @param spinnerInq
+ * @param btnrécup
+ * @param btnrécuphooked
+ * @param btnEffetHunt
+ * @param spinnerCibleHunt
+ * @param spinnerCarteHunt
+ * @param btncacher
+ * @param btnRevIdDuck
+ * @param btnSuppDuck
+ * @param spinnerSuppDuck
+ * @param btnrecupBlackCat
+ * @param btnRecupPet
+ */
+	/**
+	 * Tout ce qu'il se passe dans le controleur se passe dans ce constructeur.
+	 * Le controleur reçoit en paramètres différents boutons qu'il écoute et à chaque appui sur un bouton, différentes actions précisées dans actionPerformed(ActionEvent e){} sont réalisées.
+	 * On envoie aussi des spinners dans les paramètres du constructeur car les valeurs de ces spinners permettront de savoir par exemple quel joueur est visé par un effet ou quel joueur est le plus jeune, ou encore quelle carte souhaite récupérer un joueur.
+	 */
 public ControleurPartie(IG_witch_hunt igraph,PartieV2 partie, JButton btn, JSpinner spinner1, JSpinner spinner2, JButton btn1erJ, JSpinner spinner3, JSpinner chxj, JSpinner role, JButton chxjrole, JButton btnAccuser, JSpinner spinnerAcc, JButton btnRevId, JButton btnEffWitch, JButton btnmain, JSpinner spinnerCibleWitch, JSpinner spinnerChoixCarte, JSpinner spinnerInq, JButton btnrécup, JButton btnrécuphooked, JButton btnEffetHunt, JSpinner spinnerCibleHunt, JSpinner spinnerCarteHunt, JButton btncacher, JButton btnRevIdDuck ,JButton btnSuppDuck , JSpinner spinnerSuppDuck, JButton btnrecupBlackCat, JButton btnRecupPet){
+	/**
+	 * Détecte un appui sur le bouton "Commencer" et créé la partie avec le nombre de joueurs virtuels et physiques demandés et créé également le jeu de carte puis distribue les cartes.
+	 */
 	btn.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if((Integer)(spinner1.getValue())!=1 || (Integer)(spinner2.getValue())!=0) {
@@ -286,7 +334,5 @@ public ControleurPartie(IG_witch_hunt igraph,PartieV2 partie, JButton btn, JSpin
 			partie.donnerTour((Integer)spinnerCibleHunt.getValue());
 	}
 	});
-}
-public static void main(String[] args) {
 }
 }

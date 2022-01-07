@@ -6,35 +6,82 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
-
+/**
+ * 
+ * @author valentin guitton et lou prevost
+ */
+/**
+ * La classe partie correspond à une instanciation d'une partie du jeu Witch Hunt
+ * On y retrouve des informations sur la partie telles que les joueurs, les cartes.
+ * On y trouve également une boucle qui gère les rounds et la partie, dans laquelle des entrées clavier sont lues (sans interface graphique) pour entrainer différentes actions
+ * Cette classe implémente également des méthodes correspondant aux effets des différentes cartes
+ * Partie est un singleton, ce qui signifie qu'une seule instanciation de cette classe est possible, si une instance de classe existe déjà, elle est renvoyée quand on veut en créer une autre
+ *
+ */
 public class PartieV2 extends Observable{
+	/**
+	 * Nombre de joueurs physiques participant à la partie
+	 */
     private static int nbJoueursPhys=-2;
-
+    /**
+     * Nombre de bots participant à la partie
+     */
     private static int nbBots=-2;
-    
+    /**
+     * Id du joueur donc c'est le tour
+     */
     private static int actuel=-1;
-    
+    /**
+     * Id du joueur accusé
+     */
     private static int accusé =-1;
-    
+    /**
+     * Booléen permettant de savoir si on fait une partie avec l'interface graphique, sert notamment à ne pas attendre des inputs clavier
+     */
     private boolean interfaceg=false;
-
+/**
+ * Attribut correspondant à la partie en cours, paramètre obligatoire dans un singleton
+ */
     private static PartieV2 partieUnique = null;
-
+    /**
+     * Nombre de cartes par joueur dans une partie
+     */
     private static int nbCartesParJoueur;
-    
+    /**
+     * 1ère carte automatiquement défaussée quand on a 5 joueurs
+     */
     protected static Cartes_RumeursV2 cartesup1;
-    
+    /**
+     * 2ème carte automatiquement défaussée quand on a 5 joueurs
+     */    
     protected static Cartes_RumeursV2 cartesup2;
-    
+    /**
+     * Liste des joueurs de la partie
+     */
     static List<Joueur_Physique_ou_VirtuelV2> jouerjoueur;
-    
+    /**
+     * Liste des cartes du jeu
+     */
     private List<Cartes_RumeursV2> jouercarte;
-    
+    /**
+     * Liste des cartes défaussées au cours de la partie
+     */
     private List<Cartes_RumeursV2> cartesdéfaussées;
-    
+    /**
+     * Compteur de joueurs révélés, permettant de mettre fin à un round s'il ne reste qu'un seul joueur donc l'identité est inconnue
+     */
     protected static int comptrévélés=0;
     
 //constructeur 
+    /**
+     * 
+     * @param nbjp
+     * @param nbbot
+     * @param nbcartes
+     */
+    /**
+     * Constructeur de la classe Partie, on a en entrée le nombre de joueurs physiques et virtuels ainsi que le nombre de cartes par joueur
+     */
     private PartieV2(int nbjp,int nbbot, int nbcartes) {
     	this.nbJoueursPhys=nbjp;
     	this.nbBots=nbbot;
@@ -44,6 +91,13 @@ public class PartieV2 extends Observable{
     	cartesdéfaussées = new ArrayList<Cartes_RumeursV2> ();
     	
     }
+    /**
+     * 
+     * @param id
+     */
+    /**
+     * Cette méthode reçoit en entrée l'id d'un joueur, affiche la liste des cartes qu'il a utilisé et lui permet d'en récupérer une
+     */
     public static  void choisirCarteDef(int id){
     	int compt2=0;
 		System.out.println("\n Voici les cartes rumeurs que vous avez utilisé :");
@@ -71,7 +125,13 @@ public class PartieV2 extends Observable{
     }
 		PartieV2.partieUnique.jouerjoueur.get(id).cartesjouees.remove(PartieV2.partieUnique.jouerjoueur.get(id).cartesjouees.get(num));
     }
-    
+    /**
+     * 
+     * @param id
+     */
+    /**
+     * Affiche la main du joueur dont l'id est reçu en paramètre
+     */
     public static void afficherMain(int id) {
     	int i=0;
     	Iterator<Cartes_RumeursV2> it1 = PartieV2.partieUnique.jouerjoueur.get(id).main.iterator();
@@ -82,82 +142,228 @@ public class PartieV2 extends Observable{
 		}
     }
   //permet de n'avoir qu'une instanciation de Partie
+    /**
+     * 
+     * @param nbjp
+     * @param nbbot
+     * @param nbcartes
+     * @return Partiev2.partieUnique
+     */
+    /**
+     * Cette méthode permet l'intégration du patron Singleton, on l'appelle au lieu d'appeler le constructeur de la classe, qui lui est privé.
+     * Si on a déjà une instance de la classe Partie, cette dernière nous est retournée, sinon une instance de la classe est créée.
+     */
     public static PartieV2 getInstance(int nbjp, int nbbot, int nbcartes) {
     	if (PartieV2.partieUnique == null) {
     		PartieV2.partieUnique = new PartieV2(nbjp, nbbot, nbcartes);
     	}
     	return PartieV2.partieUnique;
     }
+    /**
+     * 
+     * @param nbJoueurPhys
+     */
+    /**
+     * On définit le nombre de joueurs physiques
+     */
     public void setnbJoueursPhys(int nbJoueurPhys) {
     	this.nbJoueursPhys=nbJoueurPhys;
     	this.setChanged();
     	this.notifyObservers();
     }
+    /**
+     * 
+     * @return nbJoueursPhys
+     */
+    /**
+     * On obtient le nombre de joueurs physiques de la partie
+     */
     public static int getnbJoueursPhys() {
     	return nbJoueursPhys;
     }
-    
+    /**
+     * 
+     * @param nbBots
+     */
+    /**
+     * On définit le nombre de joueurs virtuels
+     */
     public void setnbBots(int nbBots) {
     	this.nbBots=nbBots;
     	this.setChanged();
     	this.notifyObservers();
     }
+    /**
+     * 
+     * @return nbBots
+     */
+    /**
+     * On obtient le nombre de joueurs virtuels de la partie
+     */
     public static int getnbBots() {
     	return nbBots;
     }
+    /**
+     * 
+     * @param act
+     */
+    /**
+     * On définit le joueur actuel
+     */
     public void setActuel(int act) {
     	this.actuel=act;
     	this.setChanged();
     	this.notifyObservers();
     }
+    /**
+     * 
+     * @return actuel
+     */
+    /**
+     * On obtient l'id du joueur actuel
+     */
     public static int getActuel() {
     	return actuel;
     }
+    /**
+     * 
+     * @param nbcarte
+     */
+    /**
+     * On définit le nombre de cartes par joueur
+     */
     public void setNbCartesParJoueur(int nbcarte) {
     	this.nbCartesParJoueur=nbcarte;
     }
+    /**
+     * 
+     * @return nbCartesParJoueur
+     */
+    /**
+     * On obtient le nombre de cartes par joueur
+     */
     public static int getNbCartesParJoueur() {
     	return nbCartesParJoueur;
     }
+    /**
+     * 
+     * @param compt
+     */
+    /**
+     * On définit le nombre de joueurs dont l'identité a été révélée
+     */
     public void setComptRévélés(int compt) {
     	this.comptrévélés=compt;
     	this.setChanged();
     	this.notifyObservers();
     }
+    /**
+     * 
+     * @return comptrévélés
+     */
+    /**
+     * On retourne le nombre de joueurs dont l'id a été révélée
+     */
     public int getComptRévélés() {
     	return this.comptrévélés;
     }
+    /**
+     * 
+     * @param accusé
+     */
+    /**
+     * On définit qui est accusé
+     */
     public static void setAccusé(int accusé) {
     	PartieV2.accusé=accusé;
     }
+    /**
+     * 
+     * @return accusé
+     */
+    /**
+     * On obtient l'id du joueur accusé
+     */
     public int getAccusé() {
     	return this.accusé;
     }
+    /**
+     * 
+     * @return jouerjoueur
+     */
+    /**
+     * On obtient la liste des joueurs
+     */
     public static List<Joueur_Physique_ou_VirtuelV2> getJouerJoueur(){
     	return PartieV2.partieUnique.jouerjoueur;
     }
+    /**
+     * 
+     * @return jouerjoueur
+     */
+    /**
+     * Autre méthode permettant d'obtenir les joueurs et de les rendre observables pour l'interface graphique
+     */
     public List<Joueur_Physique_ou_VirtuelV2> getJouerJoueur2(){
     	this.setChanged();
     	this.notifyObservers();
     	return this.jouerjoueur;
     }
+    /**
+     * 
+     * @return cartesdéfaussées
+     */
+    /**
+     * On obtient la liste des cartes défaussées
+     */
     public static List<Cartes_RumeursV2> getCartesDefaussées(){
     	return PartieV2.partieUnique.cartesdéfaussées;
     }
+    /**
+     * 
+     * @return jouercarte
+     */
+    /**
+     * On obtient la liste des cartes du jeu
+     */
     public static List<Cartes_RumeursV2> getJouerCarte(){
     	return PartieV2.partieUnique.jouercarte;
     }
+    /**
+     * 
+     * @return jouercarte
+     */
+    /**
+     * Autre méthode pour obtenir la liste des cartes du jeu et de les rendres observables pour l'interface graphique
+     */
     public List<Cartes_RumeursV2> getJouerCarte2(){
     	this.setChanged();
     	this.notifyObservers();
     	return this.jouercarte;
     }
+    /**
+     * 
+     * @param inter
+     */
+    /**
+     * Permet de définir si on utilise une interface graphique ou non
+     */
     public void setInterfaceg(boolean inter) {
     	PartieV2.partieUnique.interfaceg=inter;
     }
+    /**
+     * 
+     * @return interfaceg
+     */
+    /**
+     * Permet de savoir si on utilise une interface graphique
+     */
     public static boolean getInterfaceg() {
     	return PartieV2.partieUnique.interfaceg;
     }
+    /**
+     * On créé le jeu (liste des cartes)
+     */
     public static void creationJeu() {
     	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Angry Mob",false,false,0));
     	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("The Inquisition",false,false,0));
@@ -173,17 +379,44 @@ public class PartieV2 extends Observable{
     	PartieV2.partieUnique.jouercarte.add(new Cartes_RumeursV2("Pet Newt",false,false,0));
     }
 	// ajout d'un joueur à la liste des joueurs
+    /**
+     * 
+     * @param joueur
+     */
+    /**
+     * On ajoute un joueur dans la partie
+     */
 	public void ajouterUnJoueur(Joueur_Physique_ou_VirtuelV2 joueur){
 		this.jouerjoueur.add(joueur);
 	}
 //distribution d'une carte à un joueur
+	/**
+	 * 
+	 * @param joueur
+	 * @param carte
+	 */
+	/**
+	 * On donne une carte à un joueur
+	 */
     public void distribuerCartes(Joueur_Physique_ou_VirtuelV2 joueur, Cartes_RumeursV2 carte) {
     	joueur.main.add(carte);
     }
 //mélange des cartes
+    /**
+     * On mélange le tas de cartes
+     */
 	public void melanger(){
 		Collections.shuffle(this.jouercarte);
 	}
+	/**
+	 * 
+	 * @param nomcarte
+	 * @param id
+	 * @return boolean
+	 */
+	/**
+	 * On obtient un boolean nous indiquant si la carte portant le nom nomcarte appartient au joueur dont l'id est passé en paramètre
+	 */
 	public static boolean appartient(String nomcarte, int id) {
 		boolean app =false;
 		for (int i=0;i<PartieV2.partieUnique.jouerjoueur.get(id).main.size();i++) {
@@ -193,6 +426,15 @@ public class PartieV2 extends Observable{
 		}
 		return app;
 	}
+	/**
+	 * 
+	 * @param idj
+	 * @param nomc
+	 * @return int
+	 */
+	/**
+	 * On obtient la place de la carte de nom nomc dans la main du joueur dont l'id est passé en paramètre
+	 */
 	public static int trouveIndexMain(int idj, String nomc) {
 		int idchoisie = -1;
 		for (int i=0;i<PartieV2.partieUnique.jouerjoueur.get(idj).main.size();i++) {
@@ -202,6 +444,14 @@ public class PartieV2 extends Observable{
 		}
 		return idchoisie;
 	}
+	/**
+	 * 
+	 * @param id
+	 * @return booléen
+	 */
+	/**
+	 * Permet de savoir si un joueur est encore en jeu
+	 */
 	public static boolean enJeu(int id) {
 		if(PartieV2.partieUnique.jouerjoueur.get(id).enJeu==true) {
 			return true;
@@ -210,33 +460,73 @@ public class PartieV2 extends Observable{
 			return false;
 		}
 	}
+	/**
+	 * 
+	 * @param id
+	 * @return int
+	 */
+	/**
+	 * Renvoie la taille de la main du joueur dont l'id est passé en paramètre
+	 */
 	public static int donnerTailleMain(int id) {
 		int size=-1;
 		size=PartieV2.partieUnique.jouerjoueur.get(id).main.size();
 		return size;
 	}
+	/**
+	 * 
+	 * @param id
+	 */
+	/**
+	 * Permet de protéger d'une accusation un joueur lorsqu'il utilise l'effet de la carte Evil Eye
+	 */
 	public static void protegerJoueur(int id) {
 		PartieV2.partieUnique.jouerjoueur.get(id).peutEtreAccusé=false;
 		System.out.println("\nLe joueur "+id+" ne pourra pas etre accusé au prochain tour");
 	}
-    public void finirPartie() {
-    }
-    
+   /**
+    * 
+    * @param id
+    */
+	/**
+    * On ajoute 1 point au joueur dont l'id est passé en paramètre 
+    */
     public static void ajoutPoint(int id) {
     	PartieV2.partieUnique.jouerjoueur.get(id).points++;
     	System.out.println("Le joueur "+id+" gagne 1 point");
     }
-
+    /**
+     * 
+     * @param id
+     */
+    /**
+     * On enlève 1 point au joueur dont l'id est passé en paramètre 
+     */
     public static void enleverPoint(int id) {
     	PartieV2.partieUnique.jouerjoueur.get(id).points--;
     	System.out.println("Le joueur "+id+" perd 1 point");
     }
-
+    /**
+     * 
+     * @param idc
+     * @param idjdonne
+     * @param idjreçoit
+     */
+    /**
+     * Le joueur idjdonne donne la carte qui se trouve dans sa main à la position idc au joueur idjreçoit
+     */
     public static void donnerCarte(final int idc, final int idjdonne, final int idjreçoit) {
     	PartieV2.partieUnique.jouerjoueur.get(idjreçoit).main.add(PartieV2.partieUnique.jouerjoueur.get(idjdonne).main.get(idc));
     	PartieV2.partieUnique.jouerjoueur.get(idjdonne).main.remove(PartieV2.partieUnique.jouerjoueur.get(idjdonne).main.get(idc));
     }
-
+    /**
+     * 
+     * @param carteid
+     * @param id
+     */
+    /**
+     * On envèle au joueur dont l'id est passé en paramètre la carte qui se trouve dans sa main à la position carteid
+     */
     public static void enleverCarte(int carteid, final int id) {
     	System.out.println("Cartes enlevées : ");
     	int carte=carteid;
@@ -250,10 +540,14 @@ public class PartieV2 extends Observable{
 			System.out.println(itest.next());
 		}
 		PartieV2.partieUnique.jouerjoueur.get(id).main.remove(PartieV2.partieUnique.jouerjoueur.get(id).main.get(carte));
-		//PartieV2.partieUnique.setChanged();
-		//PartieV2.partieUnique.notifyObservers();
     }
-
+    /**
+     * 
+     * @param id
+     */
+    /**
+     * On donne le tour au joueur dont l'id est passé en paramètre
+     */
     public static void donnerTour(final int id) {
     	PartieV2.partieUnique.jouerjoueur.get(id).sonTour = true;
     	PartieV2.partieUnique.actuel=id;
@@ -261,13 +555,25 @@ public class PartieV2 extends Observable{
 		PartieV2.partieUnique.notifyObservers();
     	
     }
+    /**
+     * 
+     * @param id
+     */
+    /**
+     * On enlève le tour au joueur dont l'id est passé en paramètre
+     */
     public static void enleverTour (int id) {
     	jouerjoueur.get(id).sonTour = false;
     }
 
-    public void recupererCarte(final String nom) {
-    }
     //vérifier si il reste plus de 2 joueurs et que l'on peut donc protéger un joueur d'une accusation
+    /**
+     * 
+     * @return booléen
+     */
+    /**
+     * Si il reste plus de 2 joueurs non révélés dans le round, un joueur peut être protégé par l'effet de la carte Evil Eye, sinon cette protection est invalidée
+     */
     public static boolean choixJoueur(){
     	if (PartieV2.comptrévélés<PartieV2.partieUnique.getnbBots()+PartieV2.partieUnique.getnbJoueursPhys()-2) {
     		return true;
@@ -276,6 +582,13 @@ public class PartieV2 extends Observable{
     		return false;
     	}
     }
+    /**
+     * 
+     * @param id
+     * @return booléen
+     */
+    /**Le joueur dont l'id est passé en paramètre révèle son rôle
+     */
     public static boolean revelerRole(int id) {
     	System.out.println("\nLe rôle du joueur "+id+" est :");
     	PartieV2.getJouerJoueur().get(id).révélé=true;
@@ -291,6 +604,14 @@ public class PartieV2 extends Observable{
     		return false;
     	}
     }
+    /**
+     * 
+     * @param choix
+     * @return char
+     */
+    /**
+     * Convertit un caractère minuscule en majuscule, facilite l'utilisation des scanners
+     */
     public static char conversion_majuscule(char choix){  //Fonction pour convertir en majuscule
         choix = Character.toUpperCase(choix); // convertion de choix en majuscule
         return(choix); // retourne choix

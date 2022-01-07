@@ -30,81 +30,289 @@ import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.SpinnerListModel;
-
+/**
+ * 
+ * @author lou prevost, valentin guitton
+ *
+ */
+/**
+ * Cette classe est la seule vue utilisée pour ce projet.
+ * Elle correspond à l'interface graphique qui va permettre aux joueurs de jouer à Witch Hunt sans utiliser les inputs clavier et avec un jeu graphiquement plus attrayant que les lignes de commandes.
+ * On retrouve dans cette classe différents éléments graphiques, un appel au controleur afin que ce dernier puisse détecter les actions faites sur l'interface graphique et puisse agir en conséquence, ainsi qu'une méthode de mise à jour de l'interface quand un élément du modèle est modifié.
+ * Afin que l'interface puisse opérer un changement quand il y a une modification sur la partie, les joueurs ou encore les cartes, il faut qu'elle puisse observer ces objets, c'est pour cela qu'elle implémente l'interface Observer et sa méthode update().
+ * 
+ */
 public class IG_witch_hunt implements Observer{
-
+	/**
+	 * Création du cadre de l'interface graphique
+	 */
 	private JFrame frame;
+	/**
+	 * Texte demandant le nombre de joueurs physiques
+	 */
 	private JTextField txtCombienDeJoueurs;
+	/**
+	 * Texte demandant le nombre de joueurs virtuels
+	 */
 	private JTextField txtCombienDeJoueurs_1;
+	/**
+	 * Bouton qui lance la partie
+	 */
 	private JButton commencer1;
+	/**
+	 * Bouton permettant de donner le tour au joueur le plus jeune
+	 */
 	private JButton selectJ;
+	/**
+	 * Spinner qui permet d'indiquer le nombre de joueurs physiques
+	 */
 	private JSpinner choix_nb_jp;
+	/**
+	 * Spinner qui permet d'indiquer le nombre de joueurs virtuels
+	 */
 	private JSpinner choix_nb_jv;
+	/**
+	 * Spinner permettant d'indiquer quel joueur est le plus jeune, pour lui donner le tour
+	 */
 	private JSpinner spinner3;
+	/**
+	 * Spinner permettant d'indiquer quel joueur va être accusé
+	 */
 	private JSpinner spinnerAcc;
+	/**
+	 * Affiche un message indiquant que le nombre de joueurs est correct et que la partie peut commencer
+	 */
 	private JTextPane debut_partie;
+	/**
+	 * Instance de la classe PartieV2, permettant de créer la partie
+	 */
 	private PartieV2 partie;
+	/**
+	 * Affiche un message indiquant que le nombre de joueurs n'est pas correct
+	 */
 	private JTextPane txtpnTropOuPas;
+	/**
+	 * Affiche un message indiquant quel est le joueur actuel, qui a le tour
+	 */
 	private JTextPane txtjac;
+	/**
+	 * Affiche un message indiquant où agir pour utiliser un effet witch
+	 */
 	private JTextPane txtpnEffetWitch;
+	/**
+	 * Affiche un message indiquant où agir pour utiliser un effet hunt
+	 */
 	private JTextPane txtpnEffetHunt;
+	/**
+	 * Carte 1 du joueur, quand on passe dessus le nom de la carte s'affiche ainsi que ses effets
+	 */
 	private JPanel carte1;
+	/**
+	 * Carte 2 du joueur, quand on passe dessus le nom de la carte s'affiche ainsi que ses effets
+	 */
 	private JPanel carte2;
+	/**
+	 * Carte 3 du joueur, quand on passe dessus le nom de la carte s'affiche ainsi que ses effets
+	 */
 	private JPanel carte3;
+	/**
+	 * Carte 4 du joueur, quand on passe dessus le nom de la carte s'affiche ainsi que ses effets
+	 */
 	private JPanel carte4;
+	/**
+	 * Carte 5 du joueur, quand on passe dessus le nom de la carte s'affiche ainsi que ses effets
+	 */
 	private JPanel carte5;
+	/**
+	 * Indique que le prochain spinner sert à choisir l'id du joueur qui va choisir son rôle
+	 */
 	private JTextField txtJoueur;
+	/**
+	 * Indique que le prochain spinner sert à choisir son rôle
+	 */
 	private JTextField txtRle;
+	/**
+	 * Spinner qui indique quel joueur va choisir son rôle
+	 */
 	private JSpinner chxj;
+	/**
+	 * Spinner qui indique quel rôle est choisi
+	 */
 	private JSpinner role;
+	/**
+	 * Spinner qui indique quel joueur est ciblé par l'effet witch
+	 */
 	public static JSpinner spinnerCibleWitch;
+	/**
+	 * Spinner qui indique quel joueur est ciblé par l'effet hunt
+	 */
 	public static JSpinner spinnerCibleHunt;
+	/**
+	 * Spinner qui indique la position dans la main du joueur de la carte dont l'effet hunt est utilisé
+	 */
 	private JSpinner spinnerCarteHunt;
+	/**
+	 * Spinner qui indique la position dans la main du joueur de la carte dont l'effet witch est utilisé
+	 */
 	private JSpinner spinnerChoixCarte;
+	/**
+	 * Permet à un joueur de choisir son rôle
+	 */
 	private JButton chxrole;
+	/**
+	 * Affiche le nom de la 1ère carte du joueur quand il passe sur cette dernière
+	 */
 	private JTextField textField;
+	/**
+	 * Affiche le nom de la 2ème carte du joueur quand il passe sur cette dernière
+	 */
 	private JTextField textField_1;
+	/**
+	 * Affiche le nom de la 3ème carte du joueur quand il passe sur cette dernière
+	 */
 	private JTextField textField_2;
+	/**
+	 * Affiche le nom de la 4ème carte du joueur quand il passe sur cette dernière
+	 */
 	private JTextField textField_3;
+	/**
+	 * Affiche le nom de la 5ème carte du joueur quand il passe sur cette dernière
+	 */
 	private JTextField textField_4;
+	/**
+	 * Affiche l'effet witch d'une carte du joueur quand il passe sur cette dernière
+	 */
 	private JTextField textField_5;
+	/**
+	 * Affiche l'effet hunt d'une carte du joueur quand il passe sur cette dernière
+	 */	
 	private TextArea txtarea;
+	/**
+	 * Bouton qui lance une accusation
+	 */
 	private JButton btnAccuser;
+	/**
+	 * Bouton qui permet de révéler son rôle
+	 */
 	private JButton btnRevId;
+	/**
+	 * Bouton qui permet d'utiliser un effet witch
+	 */
 	private JButton btnEffWitch;
+	/**
+	 * Bouton qui permet à un joueur accusé de voir sa main, sachant que celle affichée avant appui sur ce bouton est celle du joueur actuel, qui est donc celui qui a accusé
+	 */
 	private JButton btnmain;
+	/**
+	 * Indique l'id et le rôle d'un joueur dont le rôle vient d'être révélé
+	 */
 	public static JTextField textField_6;
+	/**
+	 * Texte indiquant que le nombre indiqué à sa droite correspond au nombre de joueurs dont le rôle a été révélé
+	 */
 	private JTextPane txtpnNombreDeJoueurs;
+	/**
+	 * Affiche le nombre de joueurs révélés
+	 */
 	private JTextField textField_7;
+	/**
+	 * Indique quel joueur est accusé
+	 */
 	private JTextField textField_8;
-	private JSpinner spinner;
+	/**
+	 * Spinner permettant de définir quelle carte le joueur souhaite supprimer quand il utilise l'effet witch de "The Inquisition"
+	 */
 	private JSpinner spinnerInq;
+	/**
+	 * Integer permettant dans le controleur et dans la classe Cartes_Rumeurs de récupérer la place dans la main du joueur de la carte qu'il souhaite supprimer via l'effet de "The Inquisition"
+	 */
 	public static int valueJSpinnerInq=-5;
+	/**
+	 * Spinner permettant d'indiquer quelle carte que le joueur a joué il souhaite récupérer (effet de Pointed Hat) ou quelle carte dans la main de celui qui l'a accusé il souhaite récupérer (effet de Hooked Nose)
+	 */
 	public static JSpinner spinner_pointedh;
+	/**
+	 * Bouton permettant de récupérer une carte en appliquant l'effet de Pointed Hat
+	 */
 	public static JButton btnrécup;
-	private JButton btnNewButton;
+	/**
+	 * Bouton permettant de récupérer une carte en appliquant l'effet de Hooked Nose
+	 */
 	public static JButton btnrécuphooked;
+	/**
+	 * Bouton permettant d'utiliser l'effet hunt d'une carte
+	 */
 	private JButton btnEffetHunt;
+	/**
+	 * Affiche temporairement le rôle du joueur qui a été ciblé par l'effet hunt de "The Inquisition"
+	 */
 	public static JTextField textField_9;
+	/**
+	 * Ce bouton permet de cacher le rôle du joueur ciblé par l'effet de hunt de "The Inquisition", cela permet de simuler l'action de "regarder discrètement" le rôle d'un joueur
+	 */
 	private JButton btnCacher;
+	/**
+	 * Indique qu'on doit supprimer une carte ou dévoiler son rôle quand on est ciblé par l'effet hunt de Ducking Stool
+	 */
 	public static JTextField textField_10;
+	/**
+	 * Ce bouton permet à un joueur de supprimer l'une de ses cartes s'il est ciblé par l'effet hunt de Ducking Stool
+	 */
 	public static JButton btnRevIdDuck;
+	/**
+	 * Ce bouton permet à un joueur de révéler son rôle s'il est ciblé par l'effet hunt de Ducking Stool
+	 */
 	public static JButton btnSuppDuck;
+	/**
+	 * Ce spinner permet de désigner quelle carte un joueur ciblé par l'effet hunt de Ducking Stool souhaite supprimer
+	 * Il permet également de désigner quelle carte souhaite récupérer un joueur qui utilise les effets hunt de Black Cat ou Pet Newt
+	 */
 	public static JSpinner spinnerSuppDuck;
+	/**
+	 * Bouton qui permet de récupérer une carte supprimée
+	 */
 	public static JButton btnrecupBlackCat;
+	/**
+	 * Bouton qui permet de récupérer une carte déjà jouée par un autre joueur
+	 */
 	public static JButton btnRecupPet;
+	/**
+	 * Texte qui prévient de la fin d'un round
+	 */
 	private JTextField textField_11;
+	/**
+	 * Affichage des scores, qui est mis à jour à la fin de chaque round
+	 */
 	private TextArea txtarea_1;
+	/**
+	 * Affichage du ou des vainqueur(s) à la fin de la partie
+	 */
 	private TextArea txtarea_2;
+	/**
+	 * Indique quel spinner permet de choisir la carte à supprimer quand on utilise l'effet witch de The Inquisition
+	 */
 	private JTextPane txtpnCarteSupprimer;
+	/**
+	 * Indique quel spinner permet de choisir la cible de l'effet hunt qui va être utilisé
+	 */
 	private JTextPane txtpnCible;
+	/**
+	 * Indique quel spinner permet de choisir la cible de l'effet witch qui va être utilisé
+	 */
 	private JTextPane txtpnCible_1;
+	/**
+	 * Indique quel spinner permet de choisir la carte dont l'effet hunt va être utilisé
+	 */
 	private JTextPane txtpnCarte;
+	/**
+	 * Indique quel spinner permet de choisir la carte dont l'effet witch va être utilisé
+	 */
 	private JTextPane txtpnCarte_1;
 	
 
 	/**
 	 * Launch the application.
+	 * La partie est créée
 	 */
 	
 	public static void main(String[] args) {
@@ -123,6 +331,7 @@ public class IG_witch_hunt implements Observer{
 
 	/**
 	 * Create the application.
+	 * Constructeur de la vue, où l'on va ajouter les observateurs et créer le controleur en lui fournissant en paramètres l'interface, la partie, des boutons et des spinners
 	 */
 	public IG_witch_hunt(PartieV2 partie) {
 		partie.setInterfaceg(true);
@@ -142,7 +351,7 @@ public class IG_witch_hunt implements Observer{
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Création, initialisation des différents éléments graphiques
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -554,7 +763,7 @@ public class IG_witch_hunt implements Observer{
 		txtarea_2.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		txtarea_2.setEnabled(false);
 		txtarea_2.setColumns(10);
-		txtarea_2.setBounds(138, 238, 670, 166);
+		txtarea_2.setBounds(151, 228, 670, 166);
 		frame.getContentPane().add(txtarea_2);
 		txtarea_2.setVisible(false);
 		
@@ -589,7 +798,9 @@ public class IG_witch_hunt implements Observer{
 		txtpnCarte_1.setBounds(827, 118, 48, 20);
 		frame.getContentPane().add(txtpnCarte_1);
 	}
-	
+	/**
+	 * Méthode qui contrôle la mise à jour de la vue en fonction de modifications intervenant au niveau des modèles
+	 */
 	public void update(Observable instanceObservable, Object arg1){
 		if(instanceObservable instanceof PartieV2) {
 			switch(((PartieV2)instanceObservable).getnbJoueursPhys()+((PartieV2)instanceObservable).getnbBots()) {

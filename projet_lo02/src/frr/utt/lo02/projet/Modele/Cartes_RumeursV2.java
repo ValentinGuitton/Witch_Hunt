@@ -9,20 +9,46 @@ import frr.utt.lo02.projet.Vue.IG_witch_hunt;
 import java.util.Observable;
 import java.util.Iterator;
 import java.util.Random;
-
+/**
+ * 
+ * @author lou prevost, valentin guitton
+ *
+ */
+/**
+ * 
+ * Cette classe contient les informations sur les cartes.
+ * Elle permet l'utilisation des effets des cartes.
+ * Elle hérite d'Observable car les cartes sont observées par l'interface graphique afin que cette dernière change quand une carte est utilisée.
+ */
 public class Cartes_RumeursV2 extends Observable{
+	/**
+	 * Nom de la carte
+	 */
     public String nom;
-
+    /**
+     * Désigne si on utilise l'effet Hunt ou l'effet Witch de la carte
+     */
     private boolean effetHunt;
-
+    /**
+     * Désigne si la carte a été utilisée
+     */
     public boolean utilisee;
-
+    /**
+     * Désigne l'id du joueur qui détient la carte
+     */
     public int idDetenteur;
 
-  //  public EffetWitch ;
-
-//    public EffetHunt ;
     //Constructeur
+    /**
+     * 
+     * @param nom
+     * @param hunt
+     * @param util
+     * @param iddet
+     */
+    /**
+     * Constructeur permettant la création de cartes
+     */
     public Cartes_RumeursV2(String nom,boolean hunt, boolean util, int iddet) {
     	this.nom=nom;
     	this.effetHunt=hunt;
@@ -30,10 +56,26 @@ public class Cartes_RumeursV2 extends Observable{
     	this.idDetenteur=iddet;
     }
     //Affichage des cartes
+    /**
+     * Permet d'afficher les cartes
+     */
     public String toString() {
     	String str = new String ("nom : "+this.nom);
     	return str;
     }
+    /**
+     * 
+     * @param nom
+     * @param hunt
+     * @param idajoué
+     * @param idaAccusé
+     * @return booléen
+     */
+    /**
+     * Permet d'utiliser l'effet witch ou hunt(selon la valeur du booléen hunt) de la carte correspondant au nom donné en paramètre.
+     * Cette carte a été jouée par le joueur dont l'id est idajoué.
+     * En cas d'utilisation d'un effet Witch, idaAccusé désigne l'id du joueur qui a accusé celui qui a joué la carte
+     */
     public boolean jouerCarte(final String nom, final boolean hunt, int idajoué, int idaAccusé) {
     	Scanner clavier = new Scanner(System.in);
     	String angrymob = "Angry Mob";
@@ -911,7 +953,15 @@ public class Cartes_RumeursV2 extends Observable{
     	}
     	return false;
     }
+    /**
+     * 
+     * @param nom
+     * @return string
 
+     */
+    /**
+     * Permet d'afficher et de retourner les effets des cartes
+     */
     public String afficherDescription(final String nom) {
     	if (nom=="Angry Mob") {
     		System.out.println("\n\nCarte : "+nom+"\nEffet Hunt : Seulement utilisable si votre identité a été révélée et que vous êtes un villageois\nRévelez l'identité d'un autre joueur, si c'est une sorcière vous gagnez 2 points et prenez le prochain tour\n sinon vous perdez 2 points et la personne désignée prend le tour\n\nWitch : Prenez le tour");
@@ -965,6 +1015,15 @@ public class Cartes_RumeursV2 extends Observable{
     		return "Cette carte est inconnue";
     	}
     }
+    /**
+     * 
+     * @param nom
+     * @return string
+
+     */
+    /**
+     * Permet retourner les effets hunt des cartes
+     */
     public String afficherEffetHunt(String nom) {
     	if (nom=="Angry Mob") {
     		return "Seulement utilisable si votre identité a été révélée et que vous êtes un villageois\nRévelez l'identité d'un autre joueur, si c'est une sorcière vous gagnez 2 points et prenez le prochain tour\n sinon vous perdez 2 points et la personne désignée prend le tour";
@@ -1006,6 +1065,15 @@ public class Cartes_RumeursV2 extends Observable{
     		return "Cette carte est inconnue";
     	}    	
     }
+    /**
+     * 
+     * @param nom
+     * @return string
+
+     */
+    /**
+     * Permet retourner les effets witch des cartes
+     */
     public String afficherEffetWitch(String nom) {
     	if (nom=="Angry Mob") {
     		return "Prenez le tour";

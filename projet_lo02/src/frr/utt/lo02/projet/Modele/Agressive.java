@@ -4,12 +4,34 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Scanner;
 import java.util.Random;
-
+/**
+ * 
+ * @author lou prevost, valentin guitton
+ *
+ */
+/**
+ * Cette classe implémente la stratégie agressive des bots.
+ * Elle hérite de la classe Observable pour que si des bots agissent, cela ait une conséquence sur l'interface graphique.
+ * Elle implemente également l'interface Stratégie, bien que cette dernière ne soit pas utilisée car la stratégie de bot Agressive est la seule que nous avons eu le temps d'implémenter.
+ */
 public abstract class Agressive extends Observable implements Stratégie  {
+	/**
+	 * Permet de prévenir l'interface graphique qu'il y a eu un changement
+	 */
 	public void prevenirChange() {;
 		this.setChanged();
 		this.notifyObservers();
 	}
+	/**
+	 * 
+	 * @param joueur
+	 * @param accuse
+	 */
+	/**
+	 * Contient l'ensemble des séquences de jeu concernant un bot agressif.
+	 * Si ce bot est accusé, si il possède des cartes rumeurs il joue l'une d'entre elles en utilisant un effet Witch, sinon il dévoile son rôle.
+	 * Si c'est au tour du bot de jouer, celui-ci étant agressif, il va automatiquement accuser un joueur.
+	 */
     public static void jouerBot(Joueur_Physique_ou_VirtuelV2 joueur,Joueur_Physique_ou_VirtuelV2 accuse) {
    	Scanner clavier = new Scanner(System.in);
     	if(joueur.getTour()==true && joueur.getBot()==true) {
